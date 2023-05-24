@@ -4,12 +4,21 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class DriveSubsystem extends SubsystemBase {
+
+  private final TalonFX driveMotor = new TalonFX(0);
+  private final TalonFX turnMotor = new TalonFX(0);
+
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public DriveSubsystem() {
+  }
 
   /**
    * Example command factory method.
@@ -25,8 +34,17 @@ public class ExampleSubsystem extends SubsystemBase {
         });
   }
 
+  public void setdriveMotor(double drivespeed) {
+    driveMotor.set(ControlMode.PercentOutput, drivespeed);
+  }
+
+  public void setturnMotor(double turnspeed) {
+    turnMotor.set(ControlMode.PercentOutput, turnspeed);
+  }
+
   /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
+   * An example method querying a boolean state of the subsystem (for example, a
+   * digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
