@@ -5,6 +5,8 @@
 package frc.robot;
 
 public final class Constants {
+  public static final double deadband = 0.05;
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
