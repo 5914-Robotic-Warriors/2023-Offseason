@@ -15,4 +15,27 @@ public class DriveCommand extends CommandBase {
         this.setdriveMotor = setdriveMotor;
         this.setturnMotor = setTurnMotor;
     }
+
+    @Override
+    public void initialize() {
+    }
+
+    @Override
+    public void execute() {
+        double realTimeSpeed = setdriveMotor.get();
+        double realTimeTurn = setturnMotor.get();
+
+        driveSubsystem.setturnMotor(realTimeTurn);
+        driveSubsystem.setdriveMotor(realTimeSpeed);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
 }
