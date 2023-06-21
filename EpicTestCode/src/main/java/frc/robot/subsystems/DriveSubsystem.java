@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private final TalonFX driveMotor = new TalonFX(0);
-  private final TalonFX turnMotor = new TalonFX(0);
+  private final TalonFX driveMotor = new TalonFX(1);
+  private final TalonFX turnMotor = new TalonFX(2);
 
   /** Creates a new ExampleSubsystem. */
   public DriveSubsystem() {
