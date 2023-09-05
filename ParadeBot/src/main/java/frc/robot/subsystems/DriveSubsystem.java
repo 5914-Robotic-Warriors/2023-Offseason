@@ -16,6 +16,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax right1 = new CANSparkMax(1, MotorType.kBrushless);
   private final CANSparkMax right2 = new CANSparkMax(2, MotorType.kBrushless);
 
+  private double speed = 1;
+
   public DriveSubsystem() {
     right1.setInverted(true);
     right2.setInverted(true);
@@ -25,9 +27,20 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void setMotors(double LeftSpeed, double RightSpeed){
-      left1.set(LeftSpeed);
-      left2.set(LeftSpeed);
-      right1.set(RightSpeed);
-      right2.set(RightSpeed);
+      left1.set((LeftSpeed) * speed);
+      left2.set((LeftSpeed) * speed);
+      right1.set((RightSpeed) * speed);
+      right2.set((RightSpeed) * speed);
+  }
+
+  public void switchHeading(boolean inverted){
+    if (inverted == true){
+      right1.setInverted(!inverted);
+      right2.setInverted(!inverted);
+      left1.setInverted(inverted);
+      left2.setInverted(inverted);
+
+      inverted = !inverted;
+    }
   }
 }
