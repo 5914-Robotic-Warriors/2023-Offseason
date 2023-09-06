@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.commands.Autos;
+import frc.robot.commands.Deadband;
 import frc.robot.commands.IntakeCMD;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -27,6 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final Deadband m_deadband = new Deadband();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final PS4Controller stick = new PS4Controller(0);
@@ -35,11 +37,11 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_driveSubsystem.setDefaultCommand(new MecanumDriveCommand(m_driveSubsystem, () -> stick.getLeftY(),
-        () -> stick.getLeftX(), () -> stick.getRightX()
-        ));
+    m_driveSubsystem.setDefaultCommand(new MecanumDriveCommand(m_driveSubsystem, m_deadband, () -> -stick.getLeftY(),
+        () -> stick.getLeftX(), () -> stick.getRightX()));
 
-    m_intakeSubsystem.setDefaultCommand(new IntakeCMD(m_intakeSubsystem, () -> stick.getR2Axis()));
+    m_intakeSubsystem
+        .setDefaultCommand(new IntakeCMD(m_intakeSubsystem, m_deadband, () -> (stick.getL2Axis() - stick.getR2Axis())));
 
     // Configure the trigger bindings
     configureBindings();

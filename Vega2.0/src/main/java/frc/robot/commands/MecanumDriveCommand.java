@@ -8,11 +8,13 @@ import frc.robot.subsystems.DriveSubsystem;
 public class MecanumDriveCommand extends CommandBase {
 
     private final DriveSubsystem driveSubsystem;
+    private final Deadband deadband;
     private final Supplier<Double> driveFunction, strafeFunction, rotFunction;
 
-    public MecanumDriveCommand(DriveSubsystem driveSubsystem, Supplier<Double> driveFunction,
+    public MecanumDriveCommand(DriveSubsystem driveSubsystem, Deadband deadband, Supplier<Double> driveFunction,
             Supplier<Double> strafeFunction, Supplier<Double> rotFunction) {
         this.driveSubsystem = driveSubsystem;
+        this.deadband = deadband;
         this.driveFunction = driveFunction;
         this.strafeFunction = strafeFunction;
         this.rotFunction = rotFunction;

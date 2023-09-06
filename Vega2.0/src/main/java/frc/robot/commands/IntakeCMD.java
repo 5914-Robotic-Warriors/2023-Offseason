@@ -7,10 +7,12 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCMD extends CommandBase{
     private final IntakeSubsystem intakeSubsystem;
+    private final Deadband deadband;
     private final Supplier<Double> intakeFunction;
 
-    public IntakeCMD(IntakeSubsystem intakeSubsystem, Supplier<Double> intakeFunction){
+    public IntakeCMD(IntakeSubsystem intakeSubsystem, Deadband deadband, Supplier<Double> intakeFunction){
         this.intakeSubsystem = intakeSubsystem;
+        this.deadband = deadband;
         this.intakeFunction = intakeFunction;
         addRequirements(intakeSubsystem);
     }

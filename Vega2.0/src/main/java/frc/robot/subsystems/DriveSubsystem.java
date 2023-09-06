@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -16,6 +19,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax frontRightDrivemotor = new CANSparkMax(2, MotorType.kBrushless);
   private final CANSparkMax backLeftDrivemotor = new CANSparkMax(3, MotorType.kBrushless);
   private final CANSparkMax backRightDrivemotor = new CANSparkMax(1, MotorType.kBrushless);
+
+  private final AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
 
   private final MecanumDrive m_robotDrive = new MecanumDrive(frontLeftDrivemotor, backLeftDrivemotor,
       frontRightDrivemotor, backRightDrivemotor);
@@ -28,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("NavX yaw value:", ahrs.getYaw());
   }
 
   public void drive(double xSpeed, double ySpeed, double zRotation) {
