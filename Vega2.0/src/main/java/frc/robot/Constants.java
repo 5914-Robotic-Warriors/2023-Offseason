@@ -14,7 +14,9 @@ package frc.robot;
  */
 public final class Constants {
 
-  public static final double driveDeadband = 0.1;
+  public static final double driveDeadband = 0.15;
+
+  public static final double intakeMotorSpeed = 0.5;
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;

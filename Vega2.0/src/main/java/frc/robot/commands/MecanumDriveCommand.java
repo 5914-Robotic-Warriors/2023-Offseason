@@ -32,7 +32,8 @@ public class MecanumDriveCommand extends CommandBase {
         double realTimeStrafe = strafeFunction.get();
         double realTImeRot = rotFunction.get();
 
-        driveSubsystem.drive(realTimeDrive, realTimeStrafe, realTImeRot);
+        driveSubsystem.drive(deadband.driveAdjustment(realTimeDrive), deadband.driveAdjustment(realTimeStrafe),
+                deadband.driveAdjustment(realTImeRot));
     }
 
     @Override

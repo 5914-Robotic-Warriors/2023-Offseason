@@ -4,13 +4,16 @@
 
 package frc.robot;
 
-import frc.robot.commands.Autos;
+import frc.robot.autos.lowCubeTaxi;
 import frc.robot.commands.Deadband;
+import frc.robot.commands.DriveForwardCMD;
 import frc.robot.commands.IntakeCMD;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -33,11 +36,18 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final PS4Controller stick = new PS4Controller(0);
 
+  //Autos
+  private final Command lowCubeTaxi = new lowCubeTaxi(m_driveSubsystem, m_intakeSubsystem);
+  private final Command noAuto = null;
+
+  //Sendablechooser
+  SendableChooser<Command> m_Chooser = new SendableChooser<>();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_driveSubsystem.setDefaultCommand(new MecanumDriveCommand(m_driveSubsystem, m_deadband, () -> -stick.getLeftY(),
+    m_driveSubsystem.setDefaultCommand(new MecanumDriveCommand(m_driveSubsystem, m_deadband, () -> (-stick.getLeftY()),
         () -> stick.getLeftX(), () -> stick.getRightX()));
 
     m_intakeSubsystem
@@ -45,6 +55,14 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
+
+    
+  //Chooser stuff
+  m_Chooser.addOption("Low cube taxi", lowCubeTaxi);
+  m_Chooser.addOption("No auto", noAuto);
+  
+
+  SmartDashboard.putData(m_Chooser);
   }
 
   /**
@@ -72,6 +90,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return lowCubeTaxi;
   }
 }

@@ -6,8 +6,10 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,14 +31,21 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     frontRightDrivemotor.setInverted(true);
     backRightDrivemotor.setInverted(true);
+
+    frontLeftDrivemotor.setIdleMode(IdleMode.kBrake);
+    frontRightDrivemotor.setIdleMode(IdleMode.kBrake);
+    backLeftDrivemotor.setIdleMode(IdleMode.kBrake);
+    backRightDrivemotor.setIdleMode(IdleMode.kBrake);
+
+    ahrs.calibrate();
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("NavX yaw value:", ahrs.getYaw());
+    SmartDashboard.putNumber("NavX yaw value:", ahrs.getAngle());
   }
 
   public void drive(double xSpeed, double ySpeed, double zRotation) {
-    m_robotDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+    m_robotDrive.driveCartesian(xSpeed, ySpeed, zRotation/*, Rotation2d.fromDegrees(ahrs.getAngle())*/);
   }
 }
